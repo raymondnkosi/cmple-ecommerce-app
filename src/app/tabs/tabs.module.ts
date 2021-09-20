@@ -41,19 +41,6 @@ import { CurrenciesPage } from './../account/currencies/currencies.page';
 import { WalletPage } from './../account/wallet/wallet.page';
 import { WishlistPage } from './../account/wishlist/wishlist.page';
 
-import { EditOrderPage } from './../vendor/edit-order/edit-order.page';
-import { EditProductPage } from './../vendor/edit-product/edit-product.page';
-import { EditVariationPage } from './../vendor/edit-variation/edit-variation.page';
-import { OrderListPage } from './../vendor/order-list/order-list.page';
-import { OrderNoteListPage } from './../vendor/order-note-list/order-note-list.page';
-import { ProductListPage } from './../vendor/product-list/product-list.page';
-import { VendorInfoPage } from './../vendor/vendor-info/vendor-info.page';
-import { VendorListPage } from './../vendor/vendor-list/vendor-list.page';
-import { CategoryPage } from './../vendor/product-add/category/category.page';
-import { DetailsPage } from './../vendor/product-add/details/details.page';
-import { PhotosPage } from './../vendor/product-add/photos/photos.page';
-import { SubcategoryPage } from './../vendor/product-add/subcategory/subcategory.page';
-
 @NgModule({
   imports: [
     IonicModule,
@@ -94,20 +81,6 @@ import { SubcategoryPage } from './../vendor/product-add/subcategory/subcategory
   CurrenciesPage,
   WalletPage,
   WishlistPage,
-
-  // Vendors
-  EditOrderPage,
-  EditProductPage,
-  EditVariationPage,
-  OrderListPage,
-  OrderNoteListPage,
-  ProductListPage,
-  VendorInfoPage,
-  VendorListPage,
-  CategoryPage,
-  DetailsPage,
-  PhotosPage,
-  SubcategoryPage,
 
   ]
 })

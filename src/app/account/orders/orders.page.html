@@ -1,7 +1,7 @@
 <ion-header mode="ios" mode='ios'>
   <ion-toolbar>
   	<ion-buttons slot="start">
-      <ion-back-button text="{{'Back' | translate}}" defaultHref="/tabs/account"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/account"></ion-back-button>
     </ion-buttons>
     <ion-title>{{"Orders" | translate}}</ion-title>
   </ion-toolbar>
@@ -16,7 +16,7 @@
   <ion-icon name="document"></ion-icon>
 </div>
 
-  <ion-card *ngFor="let item of orders" (click)="getDetail(item)" class="ion-activatable ion-focusable hydrated" mode="md">
+  <ion-card *ngFor="let item of orders" (click)="getDetail(item)" class="ion-activatable ion-focusable {{settings.settings.product_shadow}}" mode="{{settings.settings.mode}}">
     <ion-card-header>
       <ion-card-subtitle>{{item.number}} - <span style="text-transform: uppercase;">{{item.status}}</span></ion-card-subtitle>
       <ion-card-title>{{item.total | currency:settings.currency:'symbol':'1.2-2'}}</ion-card-title>

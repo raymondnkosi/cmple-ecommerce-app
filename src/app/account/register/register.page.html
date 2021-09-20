@@ -1,7 +1,7 @@
 <ion-header mode="ios" mode='ios'>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="{{'Back' | translate}}" defaultHref="/tabs/account"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/account"></ion-back-button>
     </ion-buttons>
     <ion-title>{{"Register" | translate}}</ion-title>
   </ion-toolbar>
@@ -29,7 +29,7 @@
   <ion-input required type="text" formControlName="last_name" placeholder="Last Name"></ion-input>
   </ion-item>
   <ion-item>
-  <ion-input type="text" formControlName="phone" placeholder="Phone"></ion-input>
+  <ion-input required type="text" formControlName="phone" placeholder="Phone"></ion-input>
   </ion-item>
   <ion-item>
   <ion-input required type="email" formControlName="email" placeholder="Email"></ion-input>
@@ -39,7 +39,7 @@
   </ion-item>
 </form>
 </ion-list>
- <ion-button color="{{settings.theme.button}}" expand="block" fill="solid" [disabled]="!form.valid || disableSubmit" (click)="onSubmit()">{{"Register" | translate}}</ion-button>
+ <ion-button color="{{settings.theme.button}}" fill="solid" mode="md" expand="block" fill="solid" [disabled]="!form.valid || disableSubmit" (click)="onSubmit()">{{"Register" | translate}}</ion-button>
 
  <!--ion-button expand="block" shape="undefined" mode="ios" fill="clear" color="facebook" (click)="loginWithPhone()" [disabled]="phoneLogingInn"><ion-spinner name="dots" color="{{settings.theme.button}}" *ngIf="phoneLogingInn"></ion-spinner><span *ngIf="!phoneLogingInn">{{"Register with OTP"| translate}}</span></ion-button-->
 

@@ -19,7 +19,6 @@ export class AccountPage {
     constructor(public modalController: ModalController, private statusBar: StatusBar, private config: Config, public api: ApiService, public navCtrl: NavController, public settings: Settings, public platform: Platform, private appRate: AppRate, private emailComposer: EmailComposer, private socialSharing: SocialSharing, public routerOutlet: IonRouterOutlet) {}
     goTo(path) {
         this.navCtrl.navigateForward(path);
-
     }
     async log_out() {
         this.settings.customer.id = undefined;

@@ -24,8 +24,8 @@ export class RegisterPage implements OnInit {
         this.form = this.fb.group({
             first_name: ['', Validators.required],
             last_name: ['', Validators.required],
-            phone: ['', ''],
             email: ['', Validators.email],
+            phone: ['', Validators.required],
             password: ['', Validators.required],
           });
     }
@@ -79,7 +79,7 @@ export class RegisterPage implements OnInit {
                     this.errors = this.status.errors;
                 } else if (this.status.data) {
                     this.settings.customer.id = this.status.ID;
-                     if (this.platform.is('cordova') && this.settings.settings.onesignal_app_id && this.settings.settings.google_project_id){
+                     if (this.platform.is('cordova')){
                         this.oneSignal.getIds().then((data: any) => {
                             this.form.onesignal_user_id = data.userId;
                             this.form.onesignal_push_token = data.pushToken;

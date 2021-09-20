@@ -68,7 +68,6 @@ export class ProductsPage {
         }, err => {
             event.target.complete();
         });
-        console.log('Done');
     }
     getProducts() {
         this.loader = true;
@@ -138,13 +137,13 @@ export class ProductsPage {
     }
     onInput(){
         if (this.searchInput.length) {
-            this.products = '';
+            this.products = [];
             this.filter.q = this.searchInput;
             this.filter.page = 1;
             this.getProducts();
         } else {
-            this.products = '';
-            this.filter.q = undefined;
+            this.products = [];
+            this.filter.q = '';
             this.filter.page = 1;
             this.getProducts();
         }
@@ -167,8 +166,10 @@ export class ProductsPage {
             this.getProduct(product);
         }
         else if (this.setVariations(product)) {
+
           if (this.data.cart[product.id] != undefined) this.data.cart[product.id] += 1;
           else this.data.cart[product.id] = 1;
+
           this.options.product_id = product.id;
           await this.api.postItem('add_to_cart', this.options).then(res => {
               this.cart = res;

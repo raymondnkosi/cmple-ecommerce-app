@@ -57,7 +57,7 @@ export class Settings implements OnInit {
         this.customer.shipping = {};
         this.theme.tabBar = 'white';
         this.theme.header = 'white';
-        this.theme.button = 'danger';
+        this.theme.button = 'primary';
     }
     ngOnInit() {}
     async addToWishlist(id) {
@@ -65,7 +65,7 @@ export class Settings implements OnInit {
             this.wishlist[id] = true;
             await this.api.postItem('add_wishlist', {
                 product_id: id
-            }).then(res => {
+            }).then((res: any) => {
                 this.wishlist = [];
                 for (let item in res) {
                     this.wishlist[res[item].id] = res[item].id;
@@ -92,7 +92,7 @@ export class Settings implements OnInit {
         if(this.customer.id){
             await this.api.postItem('remove_wishlist', {
                 product_id: id
-            }).then(res => {
+            }).then((res: any) => {
                 this.wishlist = [];
                 for (let item in res) {
                     this.wishlist[res[item].id] = res[item].id;

@@ -20,10 +20,6 @@
 * {
     //font-family: 'Montserrat-Regular' !important;
 }
-ion-button {
-  --border-radius: 4px;
-  margin: 10px;
-}
 .totals-amount{
     float: right;
 }
@@ -33,17 +29,11 @@ html[dir="rtl"]{
     }
 }
 .submit-button {
-  padding: 10px;
-}
-.ion-activated {
-    opacity: 0.8;
+    padding: 10px;
 }
 .spinner {
     text-align: center;
     margin: 30px auto;
-}
-.borderline-card {
-  //border: 1px solid var(--ion-color-danger, #eb445a);
 }
 .activated {
     opacity: 0.8;
@@ -54,19 +44,22 @@ html[dir="rtl"]{
 .no-shadow {
     box-shadow: none;
 }
+.shadow {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 1px;
+}
 .border{
     box-shadow: none;
-    border: 0.55px solid var(--ion-color-dark, #222428);
-    //border-top: 0.55px solid var(--ion-color-danger, #eb445a);
-    //border-right: 1px solid var(--ion-color-danger, #eb445a);
-    //border-left: 1px solid var(--ion-color-danger, #eb445a);
+    border: 0.55px solid var(--ion-color-light, #f4f5f8);
+    //border-bottom: 0.55px solid #f5f5f5;
+    //border-top: 0.55px solid #f5f5f5;
+    //border-right: 1px solid #f5f5f5;
+    //border-left: 1px solid #f5f5f5;
 }
 .scroll-related-products {
         padding: 16px 0 16px 0;
         overflow-y: hidden;
         white-space: nowrap;
         .product {
-            vertical-align: top;
             display: inline-block;
             text-decoration: none;
             width: 50%;
@@ -100,7 +93,7 @@ html[dir="rtl"]{
             margin: 0;
         }
         .border {
-            border: 0.55px solid #f5f5f5;
+            border: 0.55px solid var(--ion-color-light, #f4f5f8);
         }
     }
 .banner_block {
@@ -130,10 +123,8 @@ ion-card-title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .4px;
-    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 400;
 }
 .ios {
     .product-detail-name {
@@ -253,6 +244,13 @@ body.dark {
   --ion-color-light-contrast-rgb: 255,255,255;
   --ion-color-light-shade: #1e2023;
   --ion-color-light-tint: #383a3e;
+
+  --ion-color-background: #000000;
+  --ion-color-background-rgb: 0,0,0;
+  --ion-color-background-contrast: #ffffff;
+  --ion-color-background-contrast-rgb: 255,255,255;
+  --ion-color-background-shade: #000000;
+  --ion-color-background-tint: #1a1a1a;
 }
 
 /*

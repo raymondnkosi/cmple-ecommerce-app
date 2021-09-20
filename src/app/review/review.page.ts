@@ -31,6 +31,8 @@ export class ReviewPage implements OnInit {
     form: any;
     disableSubmit: boolean = false;
     isLoggedIn: boolean = false;
+    ratingVerificationRequired: any = '';
+    customerBoughtProduct: any;
     constructor(public api: ApiService, public router: Router, public route: ActivatedRoute, public settings: Settings, private fb: FormBuilder) {
         console.log(this.settings.customer.id);
         if(this.settings.customer && this.settings.customer.id > 0) {
@@ -49,6 +51,13 @@ export class ReviewPage implements OnInit {
             email: ['', this.isLoggedIn ? '' : Validators.email],
             comment: ['', Validators.required],
             comment_post_ID: [this.id, Validators.required]
+        });
+
+        this.route.queryParams.subscribe(params => {
+            if (params && params.ratingVerificationRequired) {
+                this.ratingVerificationRequired = params.ratingVerificationRequired,
+                this.customerBoughtProduct = params.customerBoughtProduct
+            }
         });
       
         this.getReviews()

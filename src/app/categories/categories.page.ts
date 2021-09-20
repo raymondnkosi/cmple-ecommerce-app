@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { LoadingController, NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../api.service';
@@ -11,7 +11,8 @@ import { Settings } from '../data/settings';
     styleUrls: ['categories.page.scss']
 })
 export class CategoriesPage {
-    constructor(public api: ApiService, public data: Data, public loadingController: LoadingController, public navCtrl: NavController, public router: Router, public settings: Settings, public route: ActivatedRoute) {}
+    selectedCategory: any = {};
+    constructor(public changeDetectorRef: ChangeDetectorRef, public api: ApiService, public data: Data, public loadingController: LoadingController, public navCtrl: NavController, public router: Router, public settings: Settings, public route: ActivatedRoute) {}
     getProducts(id) {
         this.navCtrl.navigateForward('/tabs/categories/products/' + id);
     }
@@ -20,10 +21,17 @@ export class CategoriesPage {
 	}
   	showSubCategory(i){
 	  	let intial = this.data.mainCategories[i].show;
-	  	this.data.mainCategories.forEach(item => item.show = false);
 	  	this.data.mainCategories[i].show = !intial;
         if(this.data.categories.filter(item => item.parent == this.data.mainCategories[i].id).length == 0) {
+            this.data.mainCategories.forEach(item => item.show = false);
             this.getProducts(this.data.mainCategories[i].id);
         }
   	}
+    selectcategory(item) {
+        this.selectedCategory = item;
+    }
+    ngAfterViewInit() {
+        this.selectedCategory = this.data.mainCategories[0];
+        this.changeDetectorRef.detectChanges();
+    }
 }

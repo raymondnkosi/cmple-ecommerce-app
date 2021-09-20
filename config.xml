@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.mstoreapp.woogrocery" version="0.0.8" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Quick Order</name>
-    <description>An awesome Mobile app for WooCommerce Grocery and Restaurant.</description>
-    <author email="support@mstoreapp.com" href="https://mstoreapp.com/">Mstoreapp Team</author>
+<widget id="com.cmple.ecommerceapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Cmple Ecommerce App</name>
+    <description>An awesome ecommerce mobile app for business owners.</description>
+    <author email="raymond@c-mple.com" href="https://c-mple.com/">Raymond Nkosi</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://localhost:8080/*" />
@@ -25,6 +25,7 @@
     <preference name="StatusBarBackgroundColor" value="#ffffff" />
     <preference name="StatusBarStyle" value="blackopaque" />
     <preference name="Orientation" value="portrait" />
+    <preference name="WKWebViewOnly" value="true" />
     <platform name="android">
         <hook src="hooks/copy_android_notification_icons.js" type="after_prepare" />
         <allow-intent href="market:*" />
@@ -116,25 +117,27 @@
     <plugin name="onesignal-cordova-plugin" spec="~2.8.3" />
     <plugin name="cordova-plugin-apprate" spec="~1.5.0" />
     <plugin name="cordova-plugin-appminimize" spec="~1.0.1" />
-    <plugin name="cordova-plugin-facebook4" spec="^6.3.0">
-        <variable name="APP_ID" value="2133337676792780" />
-        <variable name="APP_NAME" value="woocommerce app" />
-    </plugin>
     <plugin name="cordova-plugin-whitelist" spec="~1.3.3" />
     <plugin name="cordova-plugin-device" spec="~2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="~5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <plugin name="cordova-plugin-advanced-http" spec="~2.4.1" />
+    <plugin name="cordova-plugin-advanced-http" spec="~2.4.1">
+        <variable name="OKHTTP_VERSION" value="3.10.0" />
+    </plugin>
+    <plugin name="cordova-plugin-statusbar" spec="~2.4.3" />
+    <plugin name="cordova-plugin-nativestorage" spec="~2.3.2" />
+    <plugin name="cordova-plugin-inappbrowser" spec="~3.2.0" />
     <plugin name="cordova-plugin-googleplus" spec="~8.4.0">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.806565206717-kmpd2cgn3prfe3e7gufh1uaq4r0sp98a" />
     </plugin>
-    <plugin name="cordova-plugin-statusbar" spec="~2.4.3" />
-    <plugin name="cordova-plugin-crop" spec="~0.3.1" />
-    <plugin name="cordova-plugin-file-transfer" spec="~1.7.1" />
-    <plugin name="cordova-plugin-telerik-imagepicker" spec="~2.3.3">
-        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="This will allow you to add product images" />
+    <plugin name="cordova-plugin-facebook4" spec="~6.4.0">
+        <variable name="APP_ID" value="691375698089216" />
+        <variable name="APP_NAME" value="Quick Order" />
     </plugin>
-    <plugin name="cordova-plugin-nativestorage" spec="~2.3.2" />
-    <plugin name="cordova-plugin-inappbrowser" spec="~3.2.0" />
+    <plugin name="cordova-sqlite-storage" spec="~5.0.0" />
+    <plugin name="cordova-plugin-geolocation" spec="~4.0.2" />
+    <plugin name="cordova-plugin-request-location-accuracy" spec="~2.3.0" />
+    <plugin name="cordova-plugin-nativegeocoder" spec="~3.4.1" />
+    <plugin name="cordova-plugin-android-permissions" spec="~1.0.2" />
 </widget>

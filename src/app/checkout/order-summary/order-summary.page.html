@@ -16,7 +16,7 @@
     <ion-label>{{"Date" | translate}}</ion-label>
   </ion-list-header>
 
-  <ion-item lines="full">
+  <ion-item>
     <ion-label text-wrap>
       <p>{{order.date_created | date:'MMM d, y hh:mm a'}}</p>
     </ion-label>
@@ -26,7 +26,7 @@
     <ion-label>{{"Billing Address" | translate}}</ion-label>
   </ion-list-header>
 
-  <ion-item lines="full">
+  <ion-item>
     <ion-label text-wrap>
       <p>
     <span>{{order.billing.first_name}}</span>&nbsp;<span>{{order.billing.last_name}}</span>&nbsp;<span>{{order.billing.company}}</span>&nbsp;<span>{{order.billing.address_1}}</span>&nbsp;<span>{{order.billing.address_2}}</span>&nbsp;<span>{{order.billing.city}}</span>
@@ -42,7 +42,7 @@
     <ion-label>{{"Shipping Address" | translate}}</ion-label>
   </ion-list-header>
 
-  <ion-item lines="full">
+  <ion-item>
     <ion-label text-wrap>
       <p>
     <span>{{order.shipping.first_name}}</span>&nbsp;<span>{{order.shipping.last_name}}</span>&nbsp;<span>{{order.shipping.company}}</span>&nbsp;<span>{{order.shipping.address_1}}</span>&nbsp;<span>{{order.shipping.address_2}}</span>&nbsp;<span>{{order.shipping.city}}</span>&nbsp;
@@ -59,7 +59,7 @@
   </ion-list-header>
 
 
-  <ion-item lines="full">
+  <ion-item>
     <ion-label text-wrap *ngFor="let item of order.shipping_lines | keys">
     <p>{{item.value.method_title}}</p>
     </ion-label>
@@ -71,7 +71,7 @@
   </ion-list-header>
 
 
-  <ion-item lines="full">
+  <ion-item>
     <ion-label text-wrap>
     <p>{{order.payment_method_title}}</p>
     </ion-label>
@@ -81,7 +81,7 @@
     <ion-label>{{"Items" | translate}}</ion-label>
   </ion-list-header>
 
-  <ion-item lines="full">
+  <ion-item>
     <ion-label text-wrap>
     <p *ngFor="let item of order.line_items">{{item.name}} <span *ngFor="let meta of item.meta_data">{{meta.value}} </span> x {{item.quantity}}
       <span style="float: right">{{item.total | currency:settings.currency:'symbol':'1.2-2'}}</span>
@@ -93,7 +93,7 @@
     <ion-label>{{"Totals" | translate}}</ion-label>
   </ion-list-header>
 
-  <ion-item lines="full">
+  <ion-item>
     <ion-label text-wrap>
     <p>{{"Shipping" | translate}}<span style="float: right">{{order.shipping_total | currency:settings.currency:'symbol':'1.2-2'}}</span></p>
     <p>{{"Discount" | translate}}<span style="float: right">{{order.discount_total | currency:settings.currency:'symbol':'1.2-2'}}</span></p>

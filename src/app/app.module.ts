@@ -33,13 +33,8 @@ import { HomePage } from './home/home.page';
 import { HTTP } from '@ionic-native/http/ngx';
 
 //Uncomment when you use Google Login
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { Facebook } from '@ionic-native/facebook/ngx';
-
-//vendor
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { Crop } from '@ionic-native/crop/ngx';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+//import { GooglePlus } from '@ionic-native/google-plus/ngx';
+//import { Facebook } from '@ionic-native/facebook/ngx';
 
 //pages
 import { FilterPage } from '../app/filter/filter.page';
@@ -83,8 +78,8 @@ export function createTranslateLoader(http: HttpClient) {
     SplashScreen,
     HomePage,
     //Braintree,
-    GooglePlus,
-    Facebook,
+    //GooglePlus,
+    //Facebook,
     OneSignal,
     NativeStorage,
     InAppBrowser,
@@ -94,9 +89,6 @@ export function createTranslateLoader(http: HttpClient) {
     AppMinimize,
     EmailComposer,
     AppRate,
-    ImagePicker,
-    Crop,
-    FileTransfer,
     SocialSharing,
     //BarcodeScanner,
     HTTP,

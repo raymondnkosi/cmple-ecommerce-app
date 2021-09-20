@@ -50,7 +50,7 @@ export class EditAddressPage implements OnInit {
         this.disableButton = true;
         await this.api.postItem('update-address', this.address).then(res => {
             this.status = res;
-            this.navCtrl.pop();
+           // this.navCtrl.pop();
             this.disableButton = false;
         }, err => {
             this.disableButton = false;

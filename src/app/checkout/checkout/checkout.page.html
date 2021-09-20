@@ -1,7 +1,7 @@
 <ion-header mode='ios'>
   <ion-toolbar>
   	<ion-buttons slot="start">
-      <ion-back-button text="{{'Back' | translate}}" defaultHref="/tabs/cart/address"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/cart/address"></ion-back-button>
     </ion-buttons>
     <ion-title>{{"Checkout" | translate}}</ion-title>
   </ion-toolbar>
@@ -73,7 +73,7 @@
 </ion-list>
 
   <div *ngIf="cardResponse.cardNumber && checkoutData.form.payment_method == 'stripe'">
-      <ion-card mode="md">
+      <ion-card mode="{{settings.settings.mode}}">
           <ion-item *ngIf="cardResponse.cardNumber">
             <ion-label text-wrap>
               <ion-text>

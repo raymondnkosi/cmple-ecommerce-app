@@ -11,8 +11,6 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { Platform } from '@ionic/angular';
 import { Config } from '../config';
 import { TranslateService } from '@ngx-translate/core';
-import { AlertController } from '@ionic/angular';
-import { HttpParams } from "@angular/common/http";
 
 @Component({
     selector: 'app-home',
@@ -20,43 +18,38 @@ import { HttpParams } from "@angular/common/http";
     styleUrls: ['home.page.scss']
 })
 export class HomePage {
+    slideOpts = {
+      slidesPerView: 1.5,
+      //spaceBetween: 10,
+      freeMode: true,
+      coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+      }
+    };
     tempProducts: any = [];
     filter: any = {};
     hasMoreItems: boolean = true;
+    cart: any;
     screenWidth: any = 300;
-    slideOpts = { effect: 'flip', autoplay: true, parallax: true, loop: true, lazy: true };
-    
-    cart: any = {};
-    options: any = {};
-    lan: any = {};
-    variationId: any;
-
-    constructor(public translate: TranslateService, public alertController: AlertController, private config: Config, public api: ApiService, private splashScreen: SplashScreen, public platform: Platform, public translateService: TranslateService, public data: Data, public settings: Settings, public product: Product, public loadingController: LoadingController, public router: Router, public navCtrl: NavController, public route: ActivatedRoute, private oneSignal: OneSignal, private nativeStorage: NativeStorage) {
+    //slideOpts = { effect: 'flip', autoplay: true, parallax: true, loop: true, lazy: true };
+    constructor(private config: Config, public api: ApiService, private splashScreen: SplashScreen, public platform: Platform, public translateService: TranslateService, public data: Data, public settings: Settings, public product: Product, public loadingController: LoadingController, public router: Router, public navCtrl: NavController, public route: ActivatedRoute, private oneSignal: OneSignal, private nativeStorage: NativeStorage) {
         this.filter.page = 1;
         this.filter.status = 'publish';
         this.screenWidth = this.platform.width();
     }
     ngOnInit() {
         this.platform.ready().then(() => {
-            this.nativeStorage.getItem('settings').then((settings : any) => {
+            this.nativeStorage.getItem('/settings').then((settings : any) => {
                 this.config.lang = settings.lang;
                 this.translateService.setDefaultLang(this.config.lang);
                 document.documentElement.setAttribute('dir', settings.dir);
             }, error => {
             });
-            this.translate.get(['Oops!', 'Please Select', 'Please wait', 'Options', 'Option', 'Select', 'Item added to cart', 'Message', 'Requested quantity not available'  ]).subscribe(translations => {
-              this.lan.oops = translations['Oops!'];
-              this.lan.PleaseSelect = translations['Please Select'];
-              this.lan.Pleasewait = translations['Please wait'];
-              this.lan.options = translations['Options'];
-              this.lan.option = translations['Option'];
-              this.lan.select = translations['Select'];
-              this.lan.addToCart = translations['Item added to cart'];
-              this.lan.message = translations['Message'];
-              this.lan.lowQuantity = translations['Requested quantity not available'];
-            });
-
-            this.nativeStorage.getItem('blocks').then(data => {
+            this.nativeStorage.getItem('/blocks').then(data => {
                 this.data.blocks = data.blocks;
                 this.data.categories = data.categories;
                 this.data.mainCategories = this.data.categories.filter(item => item.parent == 0);
@@ -74,7 +67,7 @@ export class HomePage {
                 this.splashScreen.hide();
             }, error => console.error(error));
 
-            this.nativeStorage.getItem('settings').then(data => {
+            this.nativeStorage.getItem('/settings').then(data => {
                 if(data.lang){
                     this.config.lang = data.lang;
                     this.translateService.setDefaultLang(data.lang);
@@ -83,7 +76,6 @@ export class HomePage {
                     }
                 }
             }, error => console.error(error));
-
             this.getBlocks();
         });
     }
@@ -99,6 +91,7 @@ export class HomePage {
     getBlocks() {
         this.api.postItem('keys').then(res => {
             this.data.blocks = res;
+            console.log(this.data.blocks);
             if(this.data.blocks && this.data.blocks.user)
             this.settings.user = this.data.blocks.user.data;
             //this.settings.theme = this.data.blocks.theme;
@@ -122,7 +115,7 @@ export class HomePage {
             this.processOnsignal();
             if (this.data.blocks.user) {
                 this.settings.customer.id = this.data.blocks.user.ID;
-                if(this.data.blocks.user.wc_product_vendors_admin_vendor || this.data.blocks.user.allcaps.dc_vendor || this.data.blocks.user.allcaps.seller || this.data.blocks.user.allcaps.wcfm_vendor){
+                if(this.data.blocks.user.allcaps.wc_product_vendors_admin_vendor || this.data.blocks.user.allcaps.dc_vendor || this.data.blocks.user.allcaps.seller || this.data.blocks.user.allcaps.wcfm_vendor){
                     this.settings.vendor = true;
                 }
                 if(this.data.blocks.user.allcaps.administrator) {
@@ -151,7 +144,7 @@ export class HomePage {
                 this.data.products = this.data.blocks.recentProducts;
             }
             if (this.data.blocks.user) {
-                this.api.postItem('get_wishlist').then(res => {
+                this.api.postItem('get_wishlist').then((res: any) => {
                     for (let item in res) {
                         this.settings.wishlist[res[item].id] = res[item].id;
                     }
@@ -231,118 +224,5 @@ export class HomePage {
     }
     getHeight(child) {
         return (child.height * this.screenWidth) / child.width;
-    }
-    async addToCart(product) {
-        if(product.manage_stock && product.stock_quantity < this.data.cart[product.id]) {
-            this.presentAlert(this.lan.message, this.lan.lowQuantity);
-        } else if (product.type == 'variable' || product.type == 'grouped') {
-            this.getProduct(product);
-        }
-        else if (this.setVariations(product)) {
-
-          if (this.data.cart[product.id] != undefined) this.data.cart[product.id] += 1;
-          else this.data.cart[product.id] = 1;
-
-          this.options.product_id = product.id;
-          await this.api.postItem('add_to_cart', this.options).then(res => {
-              this.cart = res;
-              this.data.updateCart(this.cart.cart);
-          }, err => {
-              console.log(err);
-          });
-        }  
-    }
-    setVariations(product) {
-        if(product.variationId){
-            this.options.variation_id = product.variationId;
-        }
-        product.attributes.forEach(item => {
-            if (item.selected) {
-                this.options['variation[attribute_pa_' + item.name + ']'] = item.selected;
-            }
-        })
-        for (var i = 0; i < product.attributes.length; i++) {
-            if (product.type == 'variable' && product.attributes[i].variation && product.attributes[i].selected == undefined) {
-                this.presentAlert(this.lan.options, this.lan.select +' '+ product.attributes[i].name +' '+ this.lan.option);
-                return false;
-            }
-        }
-        return true;
-    }
-    async presentAlert(header, message) {
-        const alert = await this.alertController.create({
-            header: header,
-            message: message,
-            buttons: ['OK']
-        });
-        await alert.present();
-    }
-    async updateToCart(product){
-        var params: any = {};
-        console.log(product.manage_stock);
-        console.log(product.stock_quantity);
-        console.log(this.data.cart[product.id]);
-        if(product.manage_stock && product.stock_quantity < this.data.cart[product.id]) {
-            this.presentAlert(this.lan.message, this.lan.lowQuantity);
-        } else {
-          for (let key in this.data.cartItem) {
-            if (this.data.cartItem[key].product_id == product.id) {
-                  if (this.data.cartItem[key].quantity != undefined && this.data.cartItem[key].quantity == 0) {
-                      this.data.cartItem[key].quantity = 0
-                  }
-                  else {
-                      this.data.cartItem[key].quantity += 1
-                  };
-                  if (this.data.cart[product.id] != undefined && this.data.cart[product.id] == 0) {
-                      this.data.cart[product.id] = 0
-                  }
-                  else {
-                      this.data.cart[product.id] += 1
-                  };
-                  params.key = key;
-                  params.quantity = this.data.cartItem[key].quantity;
-            }      
-          }
-          params.update_cart = 'Update Cart';
-          params._wpnonce = this.data.cartNonce;
-          await this.api.postItem('update-cart-item-qty', params).then(res => {
-              this.cart = res;
-              this.data.updateCart(this.cart.cart_contents);
-          }, err => {
-              console.log(err);
-          });
-
-        }
-
-    }
-    async deleteFromCart(product){
-        var params: any = {};
-        for (let key in this.data.cartItem) {
-          if (this.data.cartItem[key].product_id == product.id) {
-            if (this.data.cartItem[key].quantity != undefined && this.data.cartItem[key].quantity == 0) {
-                this.data.cartItem[key].quantity = 0;
-            }
-            else {
-                this.data.cartItem[key].quantity -= 1;
-            };
-            if (this.data.cart[product.id] != undefined && this.data.cart[product.id] == 0) {
-                this.data.cart[product.id] = 0
-            }
-            else {
-                this.data.cart[product.id] -= 1
-            };
-            params.key = key;
-            params.quantity = this.data.cartItem[key].quantity;
-          }      
-        }    
-        params.update_cart = 'Update Cart';
-        params._wpnonce = this.data.cartNonce;
-        await this.api.postItem('update-cart-item-qty', params).then(res => {
-            console.log(res);
-            this.cart = res;
-            this.data.updateCart(this.cart.cart_contents);
-        }, err => {
-            console.log(err);
-        });
     }
 }

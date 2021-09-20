@@ -44,7 +44,6 @@ export class ApiService {
 	            	resolve(JSON.parse(data.data));
 				  })
 				  .catch(error => {
-				  	console.log(error.error);
 				  	//this.presentAlert(JSON.parse(error.error));
 				    reject(JSON.parse(error.error));
 			  	});
@@ -54,7 +53,6 @@ export class ApiService {
 	            this.http.get(url).pipe(map((res: any) => res)).subscribe(data => {
 	                resolve(data);
 	            }, err => {
-
 	            	//this.presentAlert(err.error);
 	            	reject(err.error);
 	            });
@@ -143,6 +141,18 @@ export class ApiService {
 
 	postItem(endPoint, data = {}){
 		const url = this.config.url + '/wp-admin/admin-ajax.php?action=mstoreapp-' + endPoint;
+		/*var params = new HttpParams();
+		for (var key in data) { if('object' !== typeof(data[key])) params = params.set(key, data[key]) }
+		params = params.set('lang', this.config.lang);
+		return new Promise((resolve, reject) => {
+            this.http.post(url, params, this.config.options).pipe(map((res: any) => res)).subscribe(data => {
+                console.log(data)
+                resolve(data);
+            }, err => {
+            	console.log(err.error);
+            	reject(err.error);
+            });
+        });*/
 		if (this.platform.is('ios') && this.platform.is('hybrid')) {
 			for (var key in data) { if('object' === typeof(data[key])) delete data[key] }
 			data['lang'] = this.config.lang;
@@ -151,7 +161,6 @@ export class ApiService {
 			return new Promise((resolve, reject) => {
 	            this.ionicHttp.post(url, data, {})
 				  .then(data => {
-				  	console.log(JSON.parse(data.data));
 	            	resolve(JSON.parse(data.data));
 				  })
 				  .catch(error => {

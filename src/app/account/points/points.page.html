@@ -1,15 +1,15 @@
 <ion-header mode="ios" mode='ios'>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="{{'Back' | translate}}" defaultHref="/tabs/account"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/account"></ion-back-button>
     </ion-buttons>
     <ion-title>{{"Points" | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-      <div class="spinner" *ngIf="!points.points"><ion-spinner> </ion-spinner></div>
-      <ion-list *ngIf="points.points">
+      <div class="spinner" *ngIf="!points.items"><ion-spinner> </ion-spinner></div>
+      <ion-list *ngIf="points.items">
         <ion-item lines="none" *ngIf="settings.reward == ''">
           <ion-label text-wrap>{{"You currently have no loyalty points. Place a order with us today to start earning loyalty points." | translate}}</ion-label>
         </ion-item>

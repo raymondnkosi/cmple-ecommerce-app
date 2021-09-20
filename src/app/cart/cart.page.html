@@ -1,7 +1,7 @@
 <ion-header mode='ios'>
   <ion-toolbar>
   	<ion-buttons slot="start">
-      <ion-back-button text="{{'Back' | translate}}"></ion-back-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>
       {{"Cart" | translate}}
@@ -43,9 +43,7 @@
           </ion-button>
         </ion-col>
         <ion-col>
-          <div class="ion-text-end">
-          <ion-button color="{{settings.theme.button}}" fill="clear" (click)="deleteItem(item.key, item.value.quantity)"><ion-icon name="trash" style="font-size:22px;"></ion-icon></ion-button>
-          </div>
+          <ion-button style="float: right;" color="{{settings.theme.button}}" fill="clear" (click)="deleteItem(item.key, item.value.quantity)"><ion-icon name="trash" style="font-size:22px;"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -99,7 +97,7 @@
 
   <ion-item *ngFor="let coupon of cart.coupon_discount_totals | keys">
     <ion-label>
-      {{"Coupon" | translate}} - {{coupon.key}} <ion-text (click)="removeCoupon(coupon.key)" color="{{settings.theme.button}}">(Remove)</ion-text><span class="totals-amount">-{{1*coupon.value | currency:settings.currency:'symbol':'1.2-2'}}</span>
+      {{"Coupon" | translate}} <span *ngIf="!coupon.key.includes('_')">- {{coupon.key}}</span> <ion-text (click)="removeCoupon(coupon.key)" color="{{settings.theme.button}}">(Remove)</ion-text><span class="totals-amount">-{{1*coupon.value | currency:settings.currency:'symbol':'1.2-2'}}</span>
     </ion-label>
   </ion-item>
 

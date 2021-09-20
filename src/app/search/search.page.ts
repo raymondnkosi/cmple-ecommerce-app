@@ -56,7 +56,7 @@ export class SearchPage implements OnInit {
         if (this.searchInput.length) {
             this.getProducts();
         } else {
-            this.products = '';
+            this.products = [];
             this.loading = false;
         }
     }
@@ -162,9 +162,7 @@ export class SearchPage implements OnInit {
           }, err => {
               console.log(err);
           });
-
         }
-
     }
     async deleteFromCart(product){
         var params: any = {};

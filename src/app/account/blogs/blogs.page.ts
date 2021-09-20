@@ -23,7 +23,7 @@ export class BlogsPage implements OnInit {
         this.getPosts();
     }
     async getPosts() {
-        await this.api.getPosts('/index.php/wp-json/wp/v2/posts?_embed&per_page=10&page=' + this.filter.page).then(res => {
+        await this.api.getPosts('/wp-json/wp/v2/posts?_embed&per_page=10&page=' + this.filter.page).then(res => {
             if(res)
             this.posts = res;
             else this.posts.posts = [];
@@ -33,7 +33,7 @@ export class BlogsPage implements OnInit {
     }
     async loadData(event) {
         this.filter.page = this.filter.page + 1;
-        await this.api.getPosts('/index.php/wp-json/wp/v2/posts?_embed&per_page=10&page=' + this.filter.page).then(res => {
+        await this.api.getPosts('/wp-json/wp/v2/posts?_embed&per_page=10&page=' + this.filter.page).then(res => {
             if(res) {
                this.results = res;
                 this.posts.push.apply(this.posts, this.results);

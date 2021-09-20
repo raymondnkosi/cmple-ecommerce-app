@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, NavController, AlertController, ToastController, ModalController } from '@ionic/angular';
+import { LoadingController, NavController, AlertController, ToastController, ModalController, IonRouterOutlet } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../api.service';
 import { Config } from '../config';
@@ -23,9 +23,13 @@ export class CartPage {
     loginForm: any = {};
     errors: any;
     lan: any = {};
-    constructor(public modalController: ModalController, public translate: TranslateService, private alertCtrl: AlertController, public toastController: ToastController, public config: Config, public api: ApiService, public data: Data, public router: Router, public settings: Settings, public loadingController: LoadingController, public navCtrl: NavController, public route: ActivatedRoute, public productData: Product) {}
+    slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
+    constructor(public modalController: ModalController, public translate: TranslateService, private alertCtrl: AlertController, public toastController: ToastController, public config: Config, public api: ApiService, public data: Data, public router: Router, public settings: Settings, public loadingController: LoadingController, public navCtrl: NavController, public route: ActivatedRoute, public productData: Product, public routerOutlet: IonRouterOutlet) {}
     ngOnInit() {
-        this.translate.get(['Requested quantity not available'  ]).subscribe(translations => {
+        this.translate.get(['Requested quantity not available']).subscribe(translations => {
           this.lan.lowQuantity = translations['Requested quantity not available'];
         });
     }
@@ -59,7 +63,6 @@ export class CartPage {
         });
     }
     async submitCoupon(coupon) {
-        if(coupon)
         await this.api.postItem('apply_coupon', {
             coupon_code: coupon
         }).then(res => {

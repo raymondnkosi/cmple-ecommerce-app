@@ -14,63 +14,7 @@ export class CheckoutAddressPage implements OnInit {
     errorMessage: any;
     loader: boolean = false;
     countries: any;
-
-    /* For Delivery Date Time */
-    mydate: any;
-    time: any;
-    date: any;
-    selectedDate: any;
-
-    constructor(public api: ApiService, public checkoutData: CheckoutData, public router: Router, public navCtrl: NavController, public settings: Settings, public route: ActivatedRoute) {
-
-        /* For Delivery Date Time */
-        /*this.mydate = [];
-        this.selectedDate = 0;
-
-        this.mydate[0] = new Date();
-        this.mydate[1] = new Date(this.mydate[0].getTime() + (1000 * 60 * 60 * 24));
-        this.mydate[2] = new Date(this.mydate[1].getTime() + (1000 * 60 * 60 * 24));
-        this.mydate[3] = new Date(this.mydate[2].getTime() + (1000 * 60 * 60 * 24));
-        this.mydate[4] = new Date(this.mydate[3].getTime() + (1000 * 60 * 60 * 24));
-
-        var curr_date = ("0" + this.mydate[0].getDate()).slice(-2);
-        var curr_month = ("0" + (this.mydate[0].getMonth() + 1)).slice(-2);
-        var curr_year = this.mydate[0].getFullYear();
-        this.checkoutData.form['jckwds-delivery-date'] = curr_date + '/' + curr_month + '/' + curr_year;
-        
-
-        var mm = this.mydate[0].getMonth() + 1;
-        var dd = this.mydate[0].getDate();
-
-        this.date = [this.mydate[0].getFullYear(),
-              (mm>9 ? '' : '0') + mm,
-              (dd>9 ? '' : '0') + dd
-             ].join('');
-
-        this.checkoutData.form['jckwds-delivery-date-ymd'] = this.date;  
-        this.api.getTime(this.date)
-           .then((results) => this.time = results);*/
-        /* End of Delivery Date Time */
-
-    }
-    /* For Delivery Date Time */
-    getTimeSlot(i){
-        var curr_date = ("0" + this.mydate[i].getDate()).slice(-2);
-        var curr_month = ("0" + (this.mydate[i].getMonth() + 1)).slice(-2);
-        var curr_year = this.mydate[i].getFullYear();
-        this.checkoutData.form['jckwds-delivery-date'] = curr_date + '/' + curr_month + '/' + curr_year;
-        var mm = this.mydate[i].getMonth() + 1;
-        var dd = this.mydate[i].getDate();
-
-        this.date = [this.mydate[i].getFullYear(),
-              (mm>9 ? '' : '0') + mm,
-              (dd>9 ? '' : '0') + dd
-             ].join('');
-        this.api.ajaxCall('/wp-admin/admin-ajax.php',this.date)
-           .then((results) => this.time = results);    
-        this.checkoutData.form['jckwds-delivery-date-ymd'] = this.date;   
-    }
-    
+    constructor(public api: ApiService, public checkoutData: CheckoutData, public router: Router, public navCtrl: NavController, public settings: Settings, public route: ActivatedRoute) {}
     ngOnInit() {
         this.getCheckoutForm();
         //this.getCountries();
@@ -80,15 +24,12 @@ export class CheckoutAddressPage implements OnInit {
         await this.api.postItem('get_checkout_form').then(res => {
             this.checkoutData.form = res;
             this.checkoutData.form.sameForShipping = true;
-            if(this.checkoutData.form.countries) {
-                if(this.checkoutData.form.countries.length == 1) {
+            if(this.checkoutData.form.countries.length == 1) {
                 this.checkoutData.form.billing_country = this.checkoutData.form.countries[0].value;
                 this.checkoutData.form.shipping_country = this.checkoutData.form.countries[0].value;
-                }
-                this.checkoutData.billingStates = this.checkoutData.form.countries.find(item => item.value == this.checkoutData.form.billing_country);
-                this.checkoutData.shippingStates = this.checkoutData.form.countries.find(item => item.value == this.checkoutData.form.shipping_country);
             }
-            
+            this.checkoutData.billingStates = this.checkoutData.form.countries.find(item => item.value == this.checkoutData.form.billing_country);
+            this.checkoutData.shippingStates = this.checkoutData.form.countries.find(item => item.value == this.checkoutData.form.shipping_country);
             this.loader = false;
         }, err => {
             console.log(err);
@@ -123,7 +64,7 @@ export class CheckoutAddressPage implements OnInit {
         this.errorMessage  = '';
 
         if(this.validateForm()){
-            if(!this.checkoutData.form.ship_to_different_address)
+            if(!this.checkoutData.form.ship_to_different_address || this.checkoutData.form.ship_to_different_address == false)
             this.assgnShippingAddress();
             this.navCtrl.navigateForward('/tabs/cart/checkout');
         }

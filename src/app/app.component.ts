@@ -28,16 +28,13 @@ export class AppComponent{
 
     ngAfterViewInit(): void {
 
-
-        /* Add your translation file in src/assets/i18n/ and set your default language here */
-        //this.translateService.setDefaultLang('ar');
+        this.translateService.setDefaultLang('en');
         //document.documentElement.setAttribute('dir', 'rtl');
-
 
         this.backButtonSubscription = this.platform.backButton.subscribe(() => {
         if (this.router.url === '/tabs/home') {
-        //this.backButtonSubscription.unsubscribe();
-        //this.presentAlertConfirm();
+          //this.backButtonSubscription.unsubscribe();
+          //this.presentAlertConfirm();
           navigator['app'].exitApp();
         }
         else{
@@ -55,10 +52,11 @@ export class AppComponent{
                 wkWebView.injectCookie(this.config.url + '/');
             });
 
-
             this.statusBar.backgroundColorByHexString('#ffffff');
 
-            
+            /* Add your translation file in src/assets/i18n/ and set your default language here */
+            //this.translateService.setDefaultLang('ar');
+            //document.documentElement.setAttribute('dir', 'rtl');
 
             
             //document.documentElement.setAttribute('dir', 'rtl');

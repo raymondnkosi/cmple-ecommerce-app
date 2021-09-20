@@ -5,8 +5,8 @@ import { ApiService } from '../../api.service';
 import { Settings } from './../../data/settings';
 import { FormBuilder, Validators } from '@angular/forms';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+//import { GooglePlus } from '@ionic-native/google-plus/ngx';
+//import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { ForgottenPage } from './../forgotten/forgotten.page';
 
 @Component({
@@ -17,8 +17,11 @@ import { ForgottenPage } from './../forgotten/forgotten.page';
 export class LoginPage implements OnInit {
     @ViewChild('mySlider', {static: false})  slides: IonSlides;
     slideOpts = { autoplay: false, loop: false, lazy: true };
+    icons: any = new Array(60);
+    segment: any = 'login';
     form: any;
     formRegister: any;
+    formSMS: any;
     loginTab: boolean = true;
     path: any = 'account';
     errors: any;
@@ -34,7 +37,7 @@ export class LoginPage implements OnInit {
     userInfo: any;
     phoneVerificationError: any;
     loading: any;
-    constructor(public modalCtrl: ModalController, public navParams: NavParams, public platform: Platform, private oneSignal: OneSignal, public api: ApiService, public settings: Settings, public loadingController: LoadingController, public router: Router, public navCtrl: NavController, private fb: FormBuilder, private googlePlus: GooglePlus, private facebook: Facebook) {
+    constructor(public modalCtrl: ModalController, public navParams: NavParams, public platform: Platform, private oneSignal: OneSignal, public api: ApiService, public settings: Settings, public loadingController: LoadingController, public router: Router, public navCtrl: NavController, private fb: FormBuilder/*, private googlePlus: GooglePlus, private facebook: Facebook*/) {
         this.form = this.fb.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
@@ -45,6 +48,11 @@ export class LoginPage implements OnInit {
             email: ['', Validators.email],
             phone: ['', Validators.required],
             password: ['', Validators.required],
+          });
+        this.formSMS = this.fb.group({
+            country_code: ['+91', Validators.required],
+            phone: ['', Validators.required],
+            sms: ['', Validators.required],
           });
     }
     close(status) {
@@ -101,9 +109,9 @@ export class LoginPage implements OnInit {
           });
           modal.present();
           const { data } = await modal.onWillDismiss();
-        //this.navCtrl.navigateForward('/tabs/account/login/forgotten');
+        //this.navCtrl.navigateForward('/app/tabs/account/login/forgotten');
     }
-    googleLogin(){
+    /*googleLogin(){
         this.googleLogingInn = true;
         this.presentLoading();
         this.googlePlus.login({})
@@ -193,7 +201,7 @@ export class LoginPage implements OnInit {
             this.facebookLogingInn = false;
             this.dismissLoading();
         });
-    }
+    }*/
     loginWithPhone(){
         this.phoneLogingInn = true;
         (<any>window).AccountKitPlugin.loginWithPhoneNumber({
@@ -282,5 +290,8 @@ export class LoginPage implements OnInit {
         if(this.loading) {
             this.loading.dismiss();
         }
+    }
+    segmentChanged(event) {
+      this.segment = event.detail.value;
     }
 }

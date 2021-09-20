@@ -2,24 +2,20 @@ ion-searchbar {
     //height: 40px;
 }
 ion-content {
-    --background: var(--ion-color-light);
+    --background: var(--ion-color-background, #f2f2f2);
 }
-.products {
-    ion-col {
-        text-align: center;
-        padding: 0; margin: 0;
-    }
-    ion-button {
-        --padding-end: 0;
-        --padding-start: 0;
-        --border-radius: 0;
-        padding: 0;
-        margin: 0;
-        height: 30px;
-    }
-    .offer {
-        --border-radius: 25px;
-    }
+.header-ios ion-toolbar:last-of-type {
+    --border-width: 0 0 0;
+}
+ion-list {
+    --background: var(--ion-color-background, #f2f2f2);
+}
+ion-card {
+    margin: 0;
+    height: 100%;
+}
+ion-card-header {
+    padding: 10px;
 }
 .search {
     ion-card {
@@ -33,8 +29,10 @@ ion-content {
         padding: 0;
         .price {
             padding: 0 10px 10px 10px;
-            //font-weight: bold; //color: #000000;
-            font-size: 14px;
+            font-size: 16px;
+            line-height: 2rem;
+            color: var(--ion-color-dark, #eb445a);
+            font-weight: 500;
             .special-price {
                 //color: #868686;
                 padding-left: 5px;
@@ -77,9 +75,9 @@ ion-content {
 }
 .stock {
     position: absolute;
-    top: 16px;
-    left: -38px;
-    width: 80px;
+    top: -4px;
+    left: -6px;
+    width: 130px;
     font-size: 8px;
     margin: 15px;
     margin-left: -39px;
@@ -127,8 +125,10 @@ ion-content {
                 margin: 0
             }
             .price {
-                font-weight: bold;
-                font-size: 14px;
+                font-size: 16px;
+                line-height: 2rem;
+                color: var(--ion-color-dark, #eb445a);
+                font-weight: 500;
                 .special-price {
                     padding-left: 5px;
                     font-size: 10px;

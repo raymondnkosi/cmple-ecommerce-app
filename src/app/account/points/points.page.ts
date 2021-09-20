@@ -13,13 +13,12 @@ export class PointsPage implements OnInit {
 	points: any;
   constructor(public api: ApiService, public settings:Settings, public navCtrl: NavController) {
     this.points = {};
-    this.points.items = [];
   }
 
   async ngOnInit() {
  	  await this.api.postItem('getPointsHistory').then((res:any) => {
 			  this.points = res;
-        this.settings.reward = res.points;
+        //this.settings.reward = res.points;
         this.settings.rewardValue = res.points_vlaue; 		
  		});
   }

@@ -1,7 +1,7 @@
 <ion-header mode="ios" mode='ios' >
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="{{'Back' | translate}}" defaultHref="/tabs/account"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/account"></ion-back-button>
     </ion-buttons>
     <ion-title>{{"Blogs" | translate}}</ion-title>
   </ion-toolbar>
@@ -17,7 +17,7 @@
 </div>
 
 
-<ion-card class="ion-activatable ion-focusable hydrated" *ngFor="let post of posts" (click)="getDetail(post)">
+<ion-card mode="{{settings.settings.mode}}" button="true" class="ion-activatable ion-focusable {{settings.settings.product_shadow}}" *ngFor="let post of posts" (click)="getDetail(post)">
   <div *ngIf="post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'].length">
     <ion-img alt="" src="{{post._embedded['wp:featuredmedia'][0].source_url}}"></ion-img>
   </div>
